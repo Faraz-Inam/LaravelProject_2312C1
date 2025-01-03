@@ -19,11 +19,17 @@ class studentController extends Controller
 
     
     public function create(Request $request){
-        dd($request->all());
-        // $image = time().'.'.$request->image->extension();
-        // $create = new studentModel();
-        // $create->name = $request['name'];
-        // $create->email = $request['email'];
-        // $create->image = $image['image'];
+        // dd($request->all());
+
+        $image = time().'.'.$request->image->extension();
+        $request->image->move(public_path('product_images'), $image);
+
+        $create = new studentModel();
+        $create->name = $request['name'];
+        $create->email = $request['email'];
+        $create->image = $request['image'];
+        $create->save();
+
+        return back()->withSuccess('Congratilations!');
     }
 }
